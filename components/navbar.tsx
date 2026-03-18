@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import Image from 'next/image';
-import { useState } from 'react';
-import { Menu, X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import Link from "next/link";
+import Image from "next/image";
+import { useState } from "react";
+import { Menu, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,24 +16,50 @@ export function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
             <div className="flex items-center text-3xl justify-center font-bold">
-              <Image src="/h237.png" alt="H237 Logo" width={32} height={32} className="object-contain" />
-              <span className="text-foreground tracking-tight font-extrabold mt-1">237</span>
+              <Image
+                src="/h237.png"
+                alt="H237 Logo"
+                width={32}
+                height={32}
+                className="object-contain"
+              />
+              <span className="text-foreground tracking-tight font-extrabold mt-1">
+                237
+              </span>
             </div>
           </Link>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-8">
             {/* btn active for home page */}
-            <Link href="/" className="text-foreground hover:text-primary transition">
-             <Button variant="default" className="bg-primary hover:bg-black/90 text-white cursor-pointer"> Accueil </Button>
+            <Link
+              href="/"
+              className="text-foreground hover:text-primary transition"
+            >
+              <Button
+                variant="default"
+                className="bg-primary hover:bg-black/90 text-white cursor-pointer"
+              >
+                {" "}
+                Accueil{" "}
+              </Button>
             </Link>
-            <Link href="/annonces" className="text-foreground hover:text-primary transition">
+            <Link
+              href="/annonces"
+              className="text-foreground hover:text-primary transition"
+            >
               Annonces
             </Link>
-            <Link href="#" className="text-foreground hover:text-primary transition">
+            <Link
+              href="#"
+              className="text-foreground hover:text-primary transition"
+            >
               À propos
             </Link>
-            <Link href="#" className="text-foreground hover:text-primary transition">
+            <Link
+              href="#"
+              className="text-foreground hover:text-primary transition"
+            >
               Contact
             </Link>
           </div>
@@ -62,23 +88,38 @@ export function Navbar() {
         {isOpen && (
           <div className="md:hidden pb-4 border-t border-border">
             <div className="flex flex-col gap-4 pt-4">
-              <Link href="/" className="text-foreground hover:text-primary transition">
+              <Link
+                href="/"
+                className="text-foreground hover:text-primary transition"
+              >
                 Accueil
               </Link>
-              <Link href="/annonces" className="text-foreground hover:text-primary transition">
+              <Link
+                href="/annonces"
+                className="text-foreground hover:text-primary transition"
+              >
                 Annonces
               </Link>
-              <Link href="#" className="text-foreground hover:text-primary transition">
+              <Link
+                href="#"
+                className="text-foreground hover:text-primary transition"
+              >
                 À propos
               </Link>
-              <Link href="#" className="text-foreground hover:text-primary transition">
+              <Link
+                href="#"
+                className="text-foreground hover:text-primary transition"
+              >
                 Contact
               </Link>
               <div className="flex flex-col gap-2 mt-4">
                 <Button variant="outline" className="w-full" asChild>
                   <Link href="/auth/signin">Connexion</Link>
                 </Button>
-                <Button className="w-full bg-primary hover:bg-primary/90" asChild>
+                <Button
+                  className="w-full bg-primary hover:bg-primary/90"
+                  asChild
+                >
                   <Link href="/auth/signup">S'inscrire</Link>
                 </Button>
               </div>

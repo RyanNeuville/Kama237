@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { SearchBar } from '@/components/search-bar';
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { SearchBar } from "@/components/search-bar";
 
 export function HeroSection() {
   return (
@@ -13,9 +13,9 @@ export function HeroSection() {
         className="absolute inset-0 opacity-20"
         style={{
           backgroundImage:
-            'url(https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1920&h=1080&fit=crop)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
+            "url(https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1920&h=1080&fit=crop)",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
         }}
       />
 
@@ -34,7 +34,8 @@ export function HeroSection() {
           </h1>
 
           <p className="text-lg sm:text-xl text-gray-200 mb-8 text-balance">
-            Facile, rapide, sérieux – Découvre les meilleures annonces immobilières au Cameroun
+            Facile, rapide, sérieux – Découvre les meilleures annonces
+            immobilières au Cameroun
           </p>
         </motion.div>
 
@@ -55,7 +56,11 @@ export function HeroSection() {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
-          <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
+          <Button
+            asChild
+            size="lg"
+            className="bg-accent text-accent-foreground hover:bg-accent/90"
+          >
             <Link href="/annonces">Voir les annonces</Link>
           </Button>
           <Button

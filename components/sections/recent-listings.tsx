@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { PropertyCard } from '@/components/property-card';
-import { Button } from '@/components/ui/button';
-import { properties } from '@/lib/properties';
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { PropertyCard } from "@/components/property-card";
+import { Button } from "@/components/ui/button";
+import { properties } from "@/lib/properties";
 
 export function RecentListingsSection() {
   const recentProperties = properties.slice(0, 6);

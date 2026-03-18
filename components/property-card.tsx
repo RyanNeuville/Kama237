@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import Image from 'next/image';
-import { motion } from 'framer-motion';
-import { Heart, MapPin, Bed, Bath, Square } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
+import Link from "next/link";
+import Image from "next/image";
+import { motion } from "framer-motion";
+import { Heart, MapPin, Bed, Bath, Square } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 export interface Property {
   id: string;
@@ -16,8 +16,8 @@ export interface Property {
   bathrooms: number;
   squareMeter: number;
   image: string;
-  type: 'Appartement' | 'Maison' | 'Terrain' | 'Villa' | 'Studio' | 'Commerce';
-  transaction: 'À louer' | 'À vendre';
+  type: "Appartement" | "Maison" | "Terrain" | "Villa" | "Studio" | "Commerce";
+  transaction: "À louer" | "À vendre";
   isNew?: boolean;
   isUrgent?: boolean;
   isFeatured?: boolean;
@@ -29,13 +29,13 @@ interface PropertyCardProps {
 
 export function PropertyCard({ property }: PropertyCardProps) {
   const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('fr-FR').format(price);
+    return new Intl.NumberFormat("fr-FR").format(price);
   };
 
   return (
     <motion.div
       whileHover={{ scale: 1.03 }}
-      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+      transition={{ type: "spring", stiffness: 300, damping: 20 }}
     >
       <Link href={`/annonces/${property.id}`}>
         <div className="bg-white dark:bg-slate-900 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
@@ -51,7 +51,9 @@ export function PropertyCard({ property }: PropertyCardProps) {
             {/* Badges */}
             <div className="absolute top-4 left-4 flex gap-2">
               {property.isNew && (
-                <Badge className="bg-accent text-accent-foreground">Nouveau</Badge>
+                <Badge className="bg-accent text-accent-foreground">
+                  Nouveau
+                </Badge>
               )}
               {property.isUrgent && (
                 <Badge className="bg-destructive text-white">Urgent</Badge>
@@ -77,9 +79,9 @@ export function PropertyCard({ property }: PropertyCardProps) {
             <div className="absolute bottom-4 right-4">
               <Badge
                 className={
-                  property.transaction === 'À louer'
-                    ? 'bg-blue-500 text-white'
-                    : 'bg-green-600 text-white'
+                  property.transaction === "À louer"
+                    ? "bg-blue-500 text-white"
+                    : "bg-green-600 text-white"
                 }
               >
                 {property.transaction}
@@ -90,7 +92,9 @@ export function PropertyCard({ property }: PropertyCardProps) {
           {/* Content */}
           <div className="p-4">
             {/* Type */}
-            <p className="text-sm text-muted-foreground mb-2">{property.type}</p>
+            <p className="text-sm text-muted-foreground mb-2">
+              {property.type}
+            </p>
 
             {/* Title */}
             <h3 className="font-semibold text-lg text-foreground mb-3 line-clamp-2">
@@ -100,9 +104,9 @@ export function PropertyCard({ property }: PropertyCardProps) {
             {/* Price */}
             <div className="mb-3">
               <p className="text-2xl font-bold text-primary">
-                {formatPrice(property.price)}{' '}
+                {formatPrice(property.price)}{" "}
                 <span className="text-sm text-muted-foreground">
-                  {property.transaction === 'À louer' ? 'FCFA/mois' : 'FCFA'}
+                  {property.transaction === "À louer" ? "FCFA/mois" : "FCFA"}
                 </span>
               </p>
             </div>

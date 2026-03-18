@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import Image from 'next/image';
-import { Facebook, Instagram, Twitter, MessageCircle } from 'lucide-react';
+import Link from "next/link";
+import Image from "next/image";
+import { Facebook, Instagram, Twitter, MessageCircle } from "lucide-react";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -14,8 +14,16 @@ export function Footer() {
           {/* Brand */}
           <div>
             <div className="flex items-center text-3xl font-bold mb-4">
-              <Image src="/h237.png" alt="H237 Logo" width={32} height={32} className="object-contain" />
-              <span className="text-white tracking-tight font-extrabold mt-1">237</span>
+              <Image
+                src="/h237.png"
+                alt="H237 Logo"
+                width={32}
+                height={32}
+                className="object-contain"
+              />
+              <span className="text-white tracking-tight font-extrabold mt-1">
+                237
+              </span>
             </div>
             <p className="text-sm text-gray-200">
               Trouve ta maison au 237 – Facile, rapide, sérieux
@@ -27,17 +35,26 @@ export function Footer() {
             <h4 className="font-semibold mb-4">Liens</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/" className="text-gray-200 hover:text-white transition">
+                <Link
+                  href="/"
+                  className="text-gray-200 hover:text-white transition"
+                >
                   Accueil
                 </Link>
               </li>
               <li>
-                <Link href="/annonces" className="text-gray-200 hover:text-white transition">
+                <Link
+                  href="/annonces"
+                  className="text-gray-200 hover:text-white transition"
+                >
                   Annonces
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-gray-200 hover:text-white transition">
+                <Link
+                  href="#"
+                  className="text-gray-200 hover:text-white transition"
+                >
                   Publier
                 </Link>
               </li>
@@ -49,17 +66,26 @@ export function Footer() {
             <h4 className="font-semibold mb-4">Légal</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="#" className="text-gray-200 hover:text-white transition">
+                <Link
+                  href="#"
+                  className="text-gray-200 hover:text-white transition"
+                >
                   CGU
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-gray-200 hover:text-white transition">
+                <Link
+                  href="#"
+                  className="text-gray-200 hover:text-white transition"
+                >
                   Mentions légales
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-gray-200 hover:text-white transition">
+                <Link
+                  href="#"
+                  className="text-gray-200 hover:text-white transition"
+                >
                   Confidentialité
                 </Link>
               </li>

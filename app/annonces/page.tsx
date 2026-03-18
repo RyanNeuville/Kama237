@@ -1,24 +1,24 @@
-'use client';
+"use client";
 
-import { useSearchParams } from 'next/navigation';
-import { Navbar } from '@/components/navbar';
-import { Footer } from '@/components/footer';
-import { FilterSidebar } from '@/components/filter-sidebar';
-import { PropertyCard } from '@/components/property-card';
-import { properties } from '@/lib/properties';
-import { motion } from 'framer-motion';
+import { useSearchParams } from "next/navigation";
+import { Navbar } from "@/components/navbar";
+import { Footer } from "@/components/footer";
+import { FilterSidebar } from "@/components/filter-sidebar";
+import { PropertyCard } from "@/components/property-card";
+import { properties } from "@/lib/properties";
+import { motion } from "framer-motion";
 
 export default function AnnoncesPage() {
   const searchParams = useSearchParams();
 
   // Filter properties based on search params
   const filteredProperties = properties.filter((property) => {
-    const type = searchParams.get('type');
-    const transaction = searchParams.get('transaction');
-    const city = searchParams.get('city');
-    const priceMin = parseInt(searchParams.get('priceMin') || '0');
-    const priceMax = parseInt(searchParams.get('priceMax') || '500000000');
-    const location = searchParams.get('location');
+    const type = searchParams.get("type");
+    const transaction = searchParams.get("transaction");
+    const city = searchParams.get("city");
+    const priceMin = parseInt(searchParams.get("priceMin") || "0");
+    const priceMax = parseInt(searchParams.get("priceMax") || "500000000");
+    const location = searchParams.get("location");
 
     if (type && property.type !== type) return false;
     if (transaction && property.transaction !== transaction) return false;
@@ -60,9 +60,13 @@ export default function AnnoncesPage() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-foreground mb-2">Annonces Immobilières</h1>
+          <h1 className="text-4xl font-bold text-foreground mb-2">
+            Annonces Immobilières
+          </h1>
           <p className="text-muted-foreground">
-            {filteredProperties.length} annonce{filteredProperties.length !== 1 ? 's' : ''} trouvée{filteredProperties.length !== 1 ? 's' : ''}
+            {filteredProperties.length} annonce
+            {filteredProperties.length !== 1 ? "s" : ""} trouvée
+            {filteredProperties.length !== 1 ? "s" : ""}
           </p>
         </div>
 
@@ -94,7 +98,8 @@ export default function AnnoncesPage() {
                     Aucune annonce trouvée
                   </h3>
                   <p className="text-muted-foreground">
-                    Essayez de modifier vos filtres pour trouver ce que vous cherchez
+                    Essayez de modifier vos filtres pour trouver ce que vous
+                    cherchez
                   </p>
                 </div>
               </div>

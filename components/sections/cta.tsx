@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
 
 export function CtaSection() {
   return (
@@ -19,7 +19,8 @@ export function CtaSection() {
           Prêt à publier votre annonce ?
         </h2>
         <p className="text-lg text-white/90 mb-8 max-w-2xl mx-auto">
-          Atteignez des milliers de clients potentiels en quelques minutes. La publication est gratuite !
+          Atteignez des milliers de clients potentiels en quelques minutes. La
+          publication est gratuite !
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">

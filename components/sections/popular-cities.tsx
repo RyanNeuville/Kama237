@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { Card } from '@/components/ui/card';
-import { popularCities } from '@/lib/properties';
-import { MapPin } from 'lucide-react';
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { Card } from "@/components/ui/card";
+import { popularCities } from "@/lib/properties";
+import { MapPin } from "lucide-react";
 
 export function PopularCitiesSection() {
   const containerVariants = {
@@ -59,9 +59,11 @@ export function PopularCitiesSection() {
                     <MapPin className="w-6 h-6 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-lg text-foreground">{city.name}</h3>
+                    <h3 className="font-semibold text-lg text-foreground">
+                      {city.name}
+                    </h3>
                     <p className="text-muted-foreground">
-                      {city.count} annonce{city.count > 1 ? 's' : ''}
+                      {city.count} annonce{city.count > 1 ? "s" : ""}
                     </p>
                   </div>
                 </div>
