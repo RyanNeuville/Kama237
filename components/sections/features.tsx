@@ -42,7 +42,7 @@ export function FeaturesSection() {
         className="mb-12"
       >
         <h2 className="text-4xl font-bold text-foreground mb-4 text-center">
-          Pourquoi <span className="text-primary">H237 ?</span>
+          Pourquoi <span className="text-primary">Home237 ?</span>
         </h2>
         <p className="text-center text-muted-foreground text-lg">
           Nous vous offrons une expérience immobilière transparente et sécurisée

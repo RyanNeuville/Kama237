@@ -16,7 +16,7 @@ export function Footer() {
             <div className="flex items-center text-3xl font-bold mb-4">
               <Image
                 src="/h237.png"
-                alt="H237 Logo"
+                alt="Home237 Logo"
                 width={32}
                 height={32}
                 className="object-contain"
@@ -130,7 +130,7 @@ export function Footer() {
 
         {/* Copyright */}
         <div className="border-t border-gray-400 pt-8 text-center text-sm text-gray-200">
-          <p>H237 © {currentYear}. Tous droits réservés.</p>
+          <p>Home237 © {currentYear}. Tous droits réservés.</p>
         </div>
       </div>
     </footer>

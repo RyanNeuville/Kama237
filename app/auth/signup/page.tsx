@@ -3,12 +3,13 @@
 import Link from 'next/link';
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
-import { Card } from '@/components/ui/card';
+import { Card, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 export default function SignUpPage() {
   return (
@@ -22,10 +23,19 @@ export default function SignUpPage() {
           transition={{ duration: 0.6 }}
         >
           <Card className="p-8 bg-white dark:bg-slate-800 border-border">
+            <CardTitle className='flex items-center justify-center'>
+              <Image
+                src="/h237.png"
+                alt="Home237 Logo"
+                width={50}
+                height={50}
+                className="object-contain"
+              />
+            </CardTitle>
             <div className="text-center mb-8">
               <h1 className="text-3xl font-bold text-foreground mb-2">S'inscrire</h1>
               <p className="text-muted-foreground">
-                Créez votre compte H237
+                Créez votre compte Home237
               </p>
             </div>
 

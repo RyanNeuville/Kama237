@@ -18,7 +18,7 @@ export function Navbar() {
             <div className="flex items-center text-3xl justify-center font-bold">
               <Image
                 src="/h237.png"
-                alt="H237 Logo"
+                alt="Home237 Logo"
                 width={32}
                 height={32}
                 className="object-contain"
