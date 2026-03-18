@@ -13,9 +13,9 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Brand */}
           <div>
-            <div className="flex items-center text-2xl font-bold mb-4">
+            <div className="flex items-center text-3xl font-bold mb-4">
               <Image src="/h237.png" alt="H237 Logo" width={32} height={32} className="object-contain" />
-              <span className="text-white tracking-tight font-extrabold ml-1">237</span>
+              <span className="text-white tracking-tight font-extrabold mt-1">237</span>
             </div>
             <p className="text-sm text-gray-200">
               Trouve ta maison au 237 – Facile, rapide, sérieux

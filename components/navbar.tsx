@@ -15,16 +15,17 @@ export function Navbar() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <div className="flex items-center text-2xl font-bold">
+            <div className="flex items-center text-3xl justify-center font-bold">
               <Image src="/h237.png" alt="H237 Logo" width={32} height={32} className="object-contain" />
-              <span className="text-foreground tracking-tight font-extrabold ml-1">237</span>
+              <span className="text-foreground tracking-tight font-extrabold mt-1">237</span>
             </div>
           </Link>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-8">
+            {/* btn active for home page */}
             <Link href="/" className="text-foreground hover:text-primary transition">
-              Accueil
+             <Button variant="default" className="bg-primary hover:bg-black/90 text-white cursor-pointer"> Accueil </Button>
             </Link>
             <Link href="/annonces" className="text-foreground hover:text-primary transition">
               Annonces
