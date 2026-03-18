@@ -7,8 +7,8 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'Kama237 - Trouve ta maison au Cameroun',
-  description: 'Plateforme immobilière au Cameroun : trouvez votre maison, appartement ou terrain à Douala, Yaoundé et ailleurs. Facile, rapide, sérieux.',
+  title: 'H237 - Trouve ta maison au Cameroun',
+  description: 'Plateforme immobilière au Cameroun : trouvez votre maison, appartement ou terrain au Cameroun. Facile, rapide, sérieux.',
   generator: 'v0.app',
   icons: {
     icon: [

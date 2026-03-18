@@ -24,7 +24,7 @@ export default function SignInPage() {
             <div className="text-center mb-8">
               <h1 className="text-3xl font-bold text-foreground mb-2">Connexion</h1>
               <p className="text-muted-foreground">
-                Connectez-vous à votre compte Kama237
+                Connectez-vous à votre compte H237
               </p>
             </div>
 

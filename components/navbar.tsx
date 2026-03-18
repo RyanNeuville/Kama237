@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -14,9 +15,9 @@ export function Navbar() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <div className="text-2xl font-bold">
-              <span className="text-primary">Kama</span>
-              <span className="text-accent">237</span>
+            <div className="flex items-center text-2xl font-bold">
+              <Image src="/h237.png" alt="H237 Logo" width={32} height={32} className="object-contain" />
+              <span className="text-foreground tracking-tight font-extrabold ml-1">237</span>
             </div>
           </Link>
 

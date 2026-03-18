@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Facebook, Instagram, Twitter, MessageCircle } from 'lucide-react';
 
 export function Footer() {
@@ -12,9 +13,9 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Brand */}
           <div>
-            <div className="text-2xl font-bold mb-4">
-              <span>Kama</span>
-              <span className="text-accent">237</span>
+            <div className="flex items-center text-2xl font-bold mb-4">
+              <Image src="/h237.png" alt="H237 Logo" width={32} height={32} className="object-contain" />
+              <span className="text-white tracking-tight font-extrabold ml-1">237</span>
             </div>
             <p className="text-sm text-gray-200">
               Trouve ta maison au 237 – Facile, rapide, sérieux
@@ -103,7 +104,7 @@ export function Footer() {
 
         {/* Copyright */}
         <div className="border-t border-gray-400 pt-8 text-center text-sm text-gray-200">
-          <p>Kama237 © {currentYear}. Tous droits réservés.</p>
+          <p>H237 © {currentYear}. Tous droits réservés.</p>
         </div>
       </div>
     </footer>
