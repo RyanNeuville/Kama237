@@ -124,3 +124,12 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .section-padding {
+    @apply py-20 px-6 sm:px-12 lg:px-24;
+  }
+  .container-xl {
+    @apply max-w-[1400px] mx-auto;
+  }
+}
