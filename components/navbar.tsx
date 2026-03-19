@@ -15,6 +15,7 @@ export function Navbar() {
     { name: "Accueil", href: "/" },
     { name: "Annonces", href: "/annonces" },
     { name: "Publier", href: "/publier" },
+    { name: "À propos", href: "/a-propos" },
     { name: "Contact", href: "/contact" },
   ];
 
