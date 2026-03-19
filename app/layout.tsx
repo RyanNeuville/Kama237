@@ -7,25 +7,25 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'H237 - Trouve ta maison au Cameroun',
+  title: 'Home237 - Trouve ta maison au Cameroun',
   description: 'Plateforme immobilière au Cameroun : trouvez votre maison, appartement ou terrain au Cameroun. Facile, rapide, sérieux.',
   generator: 'v0.app',
   icons: {
     icon: [
       {
-        url: '/icon-light-32x32.png',
+        url: '/h237.png',
         media: '(prefers-color-scheme: light)',
       },
       {
-        url: '/icon-dark-32x32.png',
+        url: '/h237.png',
         media: '(prefers-color-scheme: dark)',
       },
       {
-        url: '/icon.svg',
+        url: '/h237.png',
         type: 'image/svg+xml',
       },
     ],
-    apple: '/apple-icon.png',
+    apple: '/h237.png',
   },
 }
 

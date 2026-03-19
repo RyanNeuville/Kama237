@@ -60,15 +60,34 @@ export default function AnnoncesPage() {
 
       <div className="section-padding container-xl pt-16">
         <div className="mb-16">
-          <div className="flex items-center gap-2 text-primary font-bold tracking-[0.2em] uppercase text-[10px] mb-4">
-            <span className="w-8 h-px bg-primary" />
-            Répertoire
-          </div>
-          <h1 className="text-4xl sm:text-6xl font-black text-foreground tracking-tighter mb-4">
-            Toutes les <span className="text-primary italic font-serif">Annonces</span>
+          <h1 className="font-caption scroll-m-20 text-4xl font-extrabold  tracking-tight md:text-5xl lg:text-6xl lg:leading-tight">
+            <span className="relative">
+              <svg
+                width={219}
+                height={24}
+                viewBox="0 0 219 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="absolute inset-x-0 -bottom-3 w-full text-primary"
+              >
+                <path
+                  d="M0.5 2H218L21 12.5H182.5L48.5 21.5H151"
+                  stroke="currentColor"
+                  strokeWidth={4}
+                ></path>
+              </svg>
+              <span>Toutes </span>
+            </span>
+            les  
+            <span className="-mx-2 -my-1 border text-primary border-foreground/40 bg-foreground/10 px-2 py-1">
+              Annonces
+            </span>
           </h1>
+          <br />
           <p className="text-muted-foreground text-lg font-medium">
-            {filteredProperties.length} résultat{filteredProperties.length > 1 ? "s" : ""} correspondant à vos critères
+            {filteredProperties.length} résultat
+            {filteredProperties.length > 1 ? "s" : ""} correspondant à vos
+            critères
           </p>
         </div>
 
@@ -97,15 +116,26 @@ export default function AnnoncesPage() {
               <div className="flex flex-col items-center justify-center py-32 rounded-4xl bg-secondary/30 border border-dashed border-border">
                 <div className="text-center max-w-sm px-6">
                   <div className="w-16 h-16 bg-background rounded-2xl flex items-center justify-center mx-auto mb-6 text-muted-foreground">
-                    <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    <svg
+                      className="w-8 h-8"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={1.5}
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                      />
                     </svg>
                   </div>
                   <h3 className="text-2xl font-black text-foreground mb-3 tracking-tight">
                     Aucun résultat
                   </h3>
                   <p className="text-muted-foreground font-medium mb-8">
-                    Nous n'avons trouvé aucun bien correspondant à votre recherche. Essayez d'ajuster vos filtres.
+                    Nous n'avons trouvé aucun bien correspondant à votre
+                    recherche. Essayez d'ajuster vos filtres.
                   </p>
                 </div>
               </div>
