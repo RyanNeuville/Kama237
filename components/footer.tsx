@@ -52,10 +52,18 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="#"
+                  href="/a-propos"
                   className="text-gray-200 hover:text-white transition"
                 >
-                  Publier
+                  À propos
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/contact"
+                  className="text-gray-200 hover:text-white transition"
+                >
+                  Contact
                 </Link>
               </li>
             </ul>
@@ -67,15 +75,7 @@ export function Footer() {
             <ul className="space-y-2 text-sm">
               <li>
                 <Link
-                  href="#"
-                  className="text-gray-200 hover:text-white transition"
-                >
-                  CGU
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
+                  href="/mentions-legales"
                   className="text-gray-200 hover:text-white transition"
                 >
                   Mentions légales
@@ -83,7 +83,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="#"
+                  href="/confidentialite"
                   className="text-gray-200 hover:text-white transition"
                 >
                   Confidentialité

@@ -65,6 +65,7 @@ export function FilterSidebar() {
           {types.map((type) => (
             <div key={type} className="flex items-center">
               <Checkbox
+              className="border-primary border"
                 id={`type-${type}`}
                 checked={selectedType === type}
                 onCheckedChange={() =>
@@ -88,6 +89,7 @@ export function FilterSidebar() {
           {transactions.map((transaction) => (
             <div key={transaction} className="flex items-center">
               <Checkbox
+              className="border-primary border"
                 id={`transaction-${transaction}`}
                 checked={selectedTransaction === transaction}
                 onCheckedChange={() =>
@@ -115,6 +117,7 @@ export function FilterSidebar() {
           {cities.map((city) => (
             <div key={city} className="flex items-center">
               <Checkbox
+              className="border-primary border"
                 id={`city-${city}`}
                 checked={selectedCity === city}
                 onCheckedChange={() =>
