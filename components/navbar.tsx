@@ -3,11 +3,21 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+
+  const navLinks = [
+    { name: "Accueil", href: "/" },
+    { name: "Annonces", href: "/annonces" },
+    { name: "Publier", href: "/publier" },
+    { name: "À propos", href: "#" },
+    { name: "Contact", href: "#" },
+  ];
 
   return (
     <nav className="sticky top-0 z-50 bg-white dark:bg-slate-950 border-b border-border shadow-sm">
@@ -18,7 +28,7 @@ export function Navbar() {
             <div className="flex items-center text-3xl justify-center font-bold">
               <Image
                 src="/h237.png"
-                alt="Home237 Logo"
+                alt="H237 Logo"
                 width={32}
                 height={32}
                 className="object-contain"
@@ -31,37 +41,27 @@ export function Navbar() {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-8">
-            {/* btn active for home page */}
-            <Link
-              href="/"
-              className="text-foreground hover:text-primary transition"
-            >
-              <Button
-                variant="default"
-                className="bg-primary hover:bg-black/90 text-white cursor-pointer"
-              >
-                {" "}
-                Accueil{" "}
-              </Button>
-            </Link>
-            <Link
-              href="/annonces"
-              className="text-foreground hover:text-primary transition"
-            >
-              Annonces
-            </Link>
-            <Link
-              href="#"
-              className="text-foreground hover:text-primary transition"
-            >
-              À propos
-            </Link>
-            <Link
-              href="#"
-              className="text-foreground hover:text-primary transition"
-            >
-              Contact
-            </Link>
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href;
+              return (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  className="text-foreground hover:text-primary transition"
+                >
+                  {isActive ? (
+                    <Button
+                      variant="default"
+                      className="bg-primary hover:bg-black/90 text-white cursor-pointer"
+                    >
+                      {link.name}
+                    </Button>
+                  ) : (
+                    link.name
+                  )}
+                </Link>
+              );
+            })}
           </div>
 
           {/* Desktop Buttons */}
@@ -87,31 +87,22 @@ export function Navbar() {
         {/* Mobile Menu */}
         {isOpen && (
           <div className="md:hidden pb-4 border-t border-border">
-            <div className="flex flex-col gap-4 pt-4">
-              <Link
-                href="/"
-                className="text-foreground hover:text-primary transition"
-              >
-                Accueil
-              </Link>
-              <Link
-                href="/annonces"
-                className="text-foreground hover:text-primary transition"
-              >
-                Annonces
-              </Link>
-              <Link
-                href="#"
-                className="text-foreground hover:text-primary transition"
-              >
-                À propos
-              </Link>
-              <Link
-                href="#"
-                className="text-foreground hover:text-primary transition"
-              >
-                Contact
-              </Link>
+            <div className="flex flex-col gap-4 pt-4 px-4">
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    className={`text-foreground hover:text-primary transition ${
+                      isActive ? "text-primary font-bold" : ""
+                    }`}
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {link.name}
+                  </Link>
+                );
+              })}
               <div className="flex flex-col gap-2 mt-4">
                 <Button variant="outline" className="w-full" asChild>
                   <Link href="/auth/signin">Connexion</Link>
