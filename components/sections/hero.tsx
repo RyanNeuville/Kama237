@@ -48,7 +48,7 @@ export function HeroSection() {
               <span>Trouve </span>
             </span>
             ton futur chez toi au <br></br>
-            <span className="-mx-2 -my-1 border border-foreground/40 bg-foreground/10 px-2 py-1">
+            <span className="-mx-2 -my-1 border text-white border-foreground/40 bg-foreground/10 px-2 py-1">
               Cameroun
             </span>
           </h1>
