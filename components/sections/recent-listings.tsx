@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { PropertyCard } from '@/components/property-card';
-import { Button } from '@/components/ui/button';
-import { properties } from '@/lib/properties';
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { PropertyCard } from "@/components/property-card";
+import { Button } from "@/components/ui/button";
+import { properties } from "@/lib/properties";
 
 export function RecentListingsSection() {
   const recentProperties = properties.slice(0, 6);
@@ -41,7 +41,7 @@ export function RecentListingsSection() {
           Annonces <span className="text-primary">Récentes</span>
         </h2>
         <p className="text-center text-muted-foreground text-lg">
-          Découvrez les dernières propriétés listées sur Kama237
+          Découvrez les dernières propriétés listées sur H237
         </p>
       </motion.div>
 

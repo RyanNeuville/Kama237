@@ -98,7 +98,30 @@ export default function PublierPage() {
           transition={{ duration: 0.6 }}
           className="mb-12 text-center"
         >
-          <h1 className="text-4xl font-bold text-foreground mb-4">Publier une annonce</h1>
+          <h1 className="font-caption scroll-m-20 text-4xl font-extrabold  tracking-tight md:text-5xl lg:text-6xl lg:leading-tight">
+            <span className="relative">
+              <svg
+                width={219}
+                height={24}
+                viewBox="0 0 219 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="absolute inset-x-0 -bottom-3 w-full text-primary"
+              >
+                <path
+                  d="M0.5 2H218L21 12.5H182.5L48.5 21.5H151"
+                  stroke="currentColor"
+                  strokeWidth={4}
+                ></path>
+              </svg>
+              <span>Publier </span>
+            </span>
+            une  
+            <span className="-mx-2 -my-1 border text-primary border-foreground/40 bg-foreground/10 px-2 py-1">
+              Annonce
+            </span>
+          </h1>
+          <br />
           <p className="text-muted-foreground text-lg">
             Remplissez le formulaire ci-dessous pour publier votre annonce gratuitement
           </p>
@@ -194,8 +217,9 @@ export default function PublierPage() {
                       <Select
                         value={formData.type}
                         onValueChange={(value) => handleSelectChange('type', value)}
+                        required
                       >
-                        <SelectTrigger id="type" required>
+                        <SelectTrigger id="type">
                           <SelectValue placeholder="Sélectionnez..." />
                         </SelectTrigger>
                         <SelectContent>
@@ -218,8 +242,9 @@ export default function PublierPage() {
                         onValueChange={(value) =>
                           handleSelectChange('transaction', value)
                         }
+                        required
                       >
-                        <SelectTrigger id="transaction" required>
+                        <SelectTrigger id="transaction">
                           <SelectValue placeholder="Sélectionnez..." />
                         </SelectTrigger>
                         <SelectContent>
@@ -247,8 +272,9 @@ export default function PublierPage() {
                       <Select
                         value={formData.city}
                         onValueChange={(value) => handleSelectChange('city', value)}
+                        required
                       >
-                        <SelectTrigger id="city" required>
+                        <SelectTrigger id="city">
                           <SelectValue placeholder="Sélectionnez..." />
                         </SelectTrigger>
                         <SelectContent>

@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import { Card } from '@/components/ui/card';
-import { features } from '@/lib/properties';
-import { Shield, Lock, Phone, Home } from 'lucide-react';
+import { motion } from "framer-motion";
+import { Card } from "@/components/ui/card";
+import { features } from "@/lib/properties";
+import { Shield, Lock, Phone, Home } from "lucide-react";
 
 const iconMap = {
-  '✓': Shield,
-  '🔒': Lock,
-  '📱': Phone,
-  '🏠': Home,
+  "✓": Shield,
+  "🔒": Lock,
+  "📱": Phone,
+  "🏠": Home,
 };
 
 export function FeaturesSection() {
@@ -42,7 +42,7 @@ export function FeaturesSection() {
         className="mb-12"
       >
         <h2 className="text-4xl font-bold text-foreground mb-4 text-center">
-          Pourquoi <span className="text-primary">Kama237 ?</span>
+          Pourquoi <span className="text-primary">Home237 ?</span>
         </h2>
         <p className="text-center text-muted-foreground text-lg">
           Nous vous offrons une expérience immobilière transparente et sécurisée
@@ -57,7 +57,8 @@ export function FeaturesSection() {
         className="grid grid-cols-1 md:grid-cols-2 gap-8"
       >
         {features.map((feature, index) => {
-          const IconComponent = iconMap[feature.icon as keyof typeof iconMap] || Home;
+          const IconComponent =
+            iconMap[feature.icon as keyof typeof iconMap] || Home;
           return (
             <motion.div key={index} variants={itemVariants}>
               <Card className="p-8 bg-white dark:bg-slate-800 border-border hover:shadow-lg transition-shadow">
@@ -69,7 +70,9 @@ export function FeaturesSection() {
                     <h3 className="font-semibold text-lg text-foreground mb-2">
                       {feature.title}
                     </h3>
-                    <p className="text-muted-foreground">{feature.description}</p>
+                    <p className="text-muted-foreground">
+                      {feature.description}
+                    </p>
                   </div>
                 </div>
               </Card>

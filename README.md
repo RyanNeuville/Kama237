@@ -1,4 +1,4 @@
-# Kama237 - Plateforme Immobilière Camerounaise
+# H237 - Plateforme Immobilière Camerounaise
 
 Une plateforme immobilière moderne, rapide et sérieuse pour trouver votre maison au Cameroun.
 
@@ -69,7 +69,7 @@ Une plateforme immobilière moderne, rapide et sérieuse pour trouver votre mais
 1. **Cloner le projet**
    ```bash
    git clone <votre-repo>
-   cd kama237
+   cd h237
    ```
 
 2. **Installer les dépendances**
@@ -220,9 +220,9 @@ Ce projet utilise:
 ## 💬 Support
 
 Pour toute question ou suggestion, contactez-nous via:
-- Email: support@kama237.cm
+- Email: support@h237.cm
 - WhatsApp: +237 6 XX XXX XXX
 
 ---
 
-**Kama237 © 2025 - Trouve ta maison au 237**
+**H237 © 2025 - Trouve ta maison au 237**

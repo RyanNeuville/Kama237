@@ -1,24 +1,24 @@
-'use client';
+"use client";
 
-import { useSearchParams } from 'next/navigation';
-import { Navbar } from '@/components/navbar';
-import { Footer } from '@/components/footer';
-import { FilterSidebar } from '@/components/filter-sidebar';
-import { PropertyCard } from '@/components/property-card';
-import { properties } from '@/lib/properties';
-import { motion } from 'framer-motion';
+import { useSearchParams } from "next/navigation";
+import { Navbar } from "@/components/navbar";
+import { Footer } from "@/components/footer";
+import { FilterSidebar } from "@/components/filter-sidebar";
+import { PropertyCard } from "@/components/property-card";
+import { properties } from "@/lib/properties";
+import { motion } from "framer-motion";
 
 export default function AnnoncesPage() {
   const searchParams = useSearchParams();
 
   // Filter properties based on search params
   const filteredProperties = properties.filter((property) => {
-    const type = searchParams.get('type');
-    const transaction = searchParams.get('transaction');
-    const city = searchParams.get('city');
-    const priceMin = parseInt(searchParams.get('priceMin') || '0');
-    const priceMax = parseInt(searchParams.get('priceMax') || '500000000');
-    const location = searchParams.get('location');
+    const type = searchParams.get("type");
+    const transaction = searchParams.get("transaction");
+    const city = searchParams.get("city");
+    const priceMin = parseInt(searchParams.get("priceMin") || "0");
+    const priceMax = parseInt(searchParams.get("priceMax") || "500000000");
+    const location = searchParams.get("location");
 
     if (type && property.type !== type) return false;
     if (transaction && property.transaction !== transaction) return false;
@@ -55,22 +55,47 @@ export default function AnnoncesPage() {
   };
 
   return (
-    <main className="min-h-screen bg-background dark:bg-slate-950">
+    <main className="min-h-screen bg-white dark:bg-black">
       <Navbar />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-foreground mb-2">Annonces Immobilières</h1>
-          <p className="text-muted-foreground">
-            {filteredProperties.length} annonce{filteredProperties.length !== 1 ? 's' : ''} trouvée{filteredProperties.length !== 1 ? 's' : ''}
+      <div className="section-padding container-xl pt-16">
+        <div className="mb-16">
+          <h1 className="font-caption scroll-m-20 text-4xl font-extrabold  tracking-tight md:text-5xl lg:text-6xl lg:leading-tight">
+            <span className="relative">
+              <svg
+                width={219}
+                height={24}
+                viewBox="0 0 219 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="absolute inset-x-0 -bottom-3 w-full text-primary"
+              >
+                <path
+                  d="M0.5 2H218L21 12.5H182.5L48.5 21.5H151"
+                  stroke="currentColor"
+                  strokeWidth={4}
+                ></path>
+              </svg>
+              <span>Toutes </span>
+            </span>
+            les  
+            <span className="-mx-2 -my-1 border text-primary border-foreground/40 bg-foreground/10 px-2 py-1">
+              Annonces
+            </span>
+          </h1>
+          <br />
+          <p className="text-muted-foreground text-lg font-medium">
+            {filteredProperties.length} résultat
+            {filteredProperties.length > 1 ? "s" : ""} correspondant à vos
+            critères
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 lg:gap-16 items-start">
           {/* Sidebar Filters */}
-          <div className="lg:col-span-1">
+          <aside className="lg:col-span-1 lg:sticky lg:top-24">
             <FilterSidebar />
-          </div>
+          </aside>
 
           {/* Properties Grid */}
           <div className="lg:col-span-3">
@@ -79,7 +104,7 @@ export default function AnnoncesPage() {
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
-                className="grid grid-cols-1 md:grid-cols-2 gap-6"
+                className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10"
               >
                 {filteredProperties.map((property) => (
                   <motion.div key={property.id} variants={itemVariants}>
@@ -88,13 +113,29 @@ export default function AnnoncesPage() {
                 ))}
               </motion.div>
             ) : (
-              <div className="col-span-full flex items-center justify-center py-24">
-                <div className="text-center">
-                  <h3 className="text-2xl font-semibold text-foreground mb-2">
-                    Aucune annonce trouvée
+              <div className="flex flex-col items-center justify-center py-32 rounded-4xl bg-secondary/30 border border-dashed border-border">
+                <div className="text-center max-w-sm px-6">
+                  <div className="w-16 h-16 bg-background rounded-2xl flex items-center justify-center mx-auto mb-6 text-muted-foreground">
+                    <svg
+                      className="w-8 h-8"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={1.5}
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                      />
+                    </svg>
+                  </div>
+                  <h3 className="text-2xl font-black text-foreground mb-3 tracking-tight">
+                    Aucun résultat
                   </h3>
-                  <p className="text-muted-foreground">
-                    Essayez de modifier vos filtres pour trouver ce que vous cherchez
+                  <p className="text-muted-foreground font-medium mb-8">
+                    Nous n'avons trouvé aucun bien correspondant à votre
+                    recherche. Essayez d'ajuster vos filtres.
                   </p>
                 </div>
               </div>

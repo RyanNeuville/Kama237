@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { SearchBar } from '@/components/search-bar';
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { SearchBar } from "@/components/search-bar";
 
 export function HeroSection() {
   return (
@@ -13,9 +13,9 @@ export function HeroSection() {
         className="absolute inset-0 opacity-20"
         style={{
           backgroundImage:
-            'url(https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1920&h=1080&fit=crop)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
+            "url(https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1920&h=1080&fit=crop)",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
         }}
       />
 
@@ -29,12 +29,34 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 text-balance">
-            Trouve ton futur chez toi au Cameroun
+          <h1 className="font-caption scroll-m-20 text-4xl font-extrabold  tracking-tight md:text-5xl lg:text-6xl lg:leading-tight">
+            <span className="relative">
+              <svg
+                width={219}
+                height={24}
+                viewBox="0 0 219 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="absolute inset-x-0 -bottom-3 w-full text-white"
+              >
+                <path
+                  d="M0.5 2H218L21 12.5H182.5L48.5 21.5H151"
+                  stroke="currentColor"
+                  strokeWidth={4}
+                ></path>
+              </svg>
+              <span>Trouve </span>
+            </span>
+            ton futur chez toi au <br></br>
+            <span className="-mx-2 -my-1 border border-foreground/40 bg-foreground/10 px-2 py-1">
+              Cameroun
+            </span>
           </h1>
+          <br />
 
-          <p className="text-lg sm:text-xl text-gray-200 mb-8 text-balance">
-            Facile, rapide, sérieux – Découvre les meilleures annonces immobilières au Cameroun
+          <p className="text-lg font-normal text-white md:text-xl lg:text-2xl">
+            Facile, rapide, sérieux – Découvre les meilleures annonces
+            immobilières au Cameroun
           </p>
         </motion.div>
 
@@ -55,7 +77,11 @@ export function HeroSection() {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
-          <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
+          <Button
+            asChild
+            size="lg"
+            className="bg-accent text-accent-foreground hover:bg-accent/90"
+          >
             <Link href="/annonces">Voir les annonces</Link>
           </Button>
           <Button
