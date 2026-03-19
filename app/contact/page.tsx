@@ -137,7 +137,7 @@ export default function ContactPage() {
               {
                 icon: Mail,
                 title: "Email",
-                details: ["support@kama237.cm", "contact@kama237.cm"],
+                details: ["support@Home237.cm", "contact@Home237.cm"],
               },
               {
                 icon: MapPin,
