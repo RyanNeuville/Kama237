@@ -1,0 +1,30 @@
+@startuml
+actor "Visiteur (Client)" as V
+participant "Frontend (Next.js)" as F
+participant "API / Backend" as B
+database "Base de Données" as DB
+
+== Recherche ==
+V -> F: Entre filtres (Douala, Appartement, Budget)
+F -> B: GET /api/properties?ville=Douala&type=Appartement...
+B -> DB: Requête (SELECT WHERE statut = PUBLIÉ...)
+DB --> B: Liste des propriétés correspondantes
+B --> F: Retourne résultats JSON
+F --> V: Affiche la grille des cartes de biens
+
+== Vue Détail ==
+V -> F: Clique sur la carte d'un "Appartement"
+F -> B: GET /api/properties/123
+B -> DB: Fetch données du bien + Info vendeur
+DB --> B: Données complètes
+B --> F: Retourne JSON
+F --> V: Affiche la page complète du bien avec images
+
+== Contact ==
+V -> F: Remplit formulaire de contact rapide
+F -> B: POST /api/messages {email, tel, texte}
+B -> DB: Sauvegarde message lié à la propriété
+note right of B: Envoi d'un Email/SMS\nde notif à l'annonceur
+B --> F: 200 OK (Message envoyé)
+F --> V: Affiche notification Toaster:\n"Message envoyé avec succès !"
+@enduml
