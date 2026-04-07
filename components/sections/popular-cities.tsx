@@ -3,8 +3,16 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Card } from "@/components/ui/card";
-import { popularCities } from "@/lib/properties";
 import { MapPin } from "lucide-react";
+
+export const popularCities = [
+  { name: "Douala", count: 142 },
+  { name: "Yaoundé", count: 98 },
+  { name: "Kribi", count: 45 },
+  { name: "Limbe", count: 34 },
+  { name: "Bafoussam", count: 28 },
+  { name: "Buea", count: 19 },
+];
 
 export function PopularCitiesSection() {
   const containerVariants = {

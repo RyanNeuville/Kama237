@@ -2,8 +2,14 @@
 
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
-import { features } from "@/lib/properties";
 import { Shield, Lock, Phone, Home } from "lucide-react";
+
+export const features = [
+  { icon: "✓", title: "Annonces Vérifiées", description: "Toutes nos annonces sont minutieusement vérifiées pour vous garantir une sécurité totale." },
+  { icon: "🔒", title: "Paiements Sécurisés", description: "Vos informations et transactions immobilières sont protégées." },
+  { icon: "📱", title: "Support Client 24/7", description: "Notre équipe locale est à votre écoute à tout moment pour vous." },
+  { icon: "🏠", title: "Large Choix", description: "Découvrez des milliers de maisons et terrains à travers le Cameroun." },
+];
 
 const iconMap = {
   "✓": Shield,

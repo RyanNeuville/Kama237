@@ -6,7 +6,6 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { FilterSidebar } from "@/components/filter-sidebar";
 import { PropertyCard } from "@/components/property-card";
-import { properties as staticProperties } from "@/lib/properties";
 import { supabase, toFrontendProperty } from "@/lib/supabase";
 import type { DbProperty } from "@/lib/supabase";
 import { motion } from "framer-motion";
@@ -58,26 +57,16 @@ function AnnoncesContent() {
 
         const { data, error } = await query;
 
-        if (error || !data || data.length === 0) {
-          // Fallback to static data if Supabase returns nothing
-          if (error) console.warn("Supabase error, using static data:", error.message);
-
-          const filtered = staticProperties.filter((property) => {
-            if (type && property.type !== type) return false;
-            if (transaction && property.transaction !== transaction) return false;
-            if (city && property.city !== city) return false;
-            if (priceMin && property.price < parseInt(priceMin)) return false;
-            if (priceMax && property.price > parseInt(priceMax)) return false;
-            if (location && !property.location.toLowerCase().includes(location.toLowerCase()) && !property.title.toLowerCase().includes(location.toLowerCase())) return false;
-            return true;
-          });
-          setProperties(filtered as ReturnType<typeof toFrontendProperty>[]);
-        } else {
+        if (error) {
+          console.warn("Supabase error:", error.message);
+          setProperties([]);
+        } else if (data) {
           setProperties((data as DbProperty[]).map(toFrontendProperty));
+        } else {
+          setProperties([]);
         }
-      } catch {
-        // Complete fallback
-        setProperties(staticProperties as ReturnType<typeof toFrontendProperty>[]);
+      } catch (err) {
+        setProperties([]);
       } finally {
         setLoading(false);
       }

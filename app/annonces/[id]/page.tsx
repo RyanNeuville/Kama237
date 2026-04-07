@@ -12,7 +12,6 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { properties as staticProperties } from '@/lib/properties';
 import { supabase, toFrontendProperty } from '@/lib/supabase';
 import type { DbProperty } from '@/lib/supabase';
 import {
@@ -47,23 +46,12 @@ export default function PropertyDetailPage() {
           .single();
 
         if (error || !data) {
-          // Fallback to static data
-          const staticProp = staticProperties.find((p) => p.id === id);
-          if (staticProp) {
-            setProperty(staticProp as ReturnType<typeof toFrontendProperty>);
-          } else {
-            setNotFound(true);
-          }
+          setNotFound(true);
         } else {
           setProperty(toFrontendProperty(data as DbProperty));
         }
-      } catch {
-        const staticProp = staticProperties.find((p) => p.id === id);
-        if (staticProp) {
-          setProperty(staticProp as ReturnType<typeof toFrontendProperty>);
-        } else {
-          setNotFound(true);
-        }
+      } catch (err) {
+        setNotFound(true);
       } finally {
         setLoading(false);
       }
