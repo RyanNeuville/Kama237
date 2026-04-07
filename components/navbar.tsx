@@ -3,13 +3,16 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { Menu, X, LogOut, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/lib/auth-context";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
+  const { user, profile, loading, signOut } = useAuth();
 
   const navLinks = [
     { name: "Accueil", href: "/" },
@@ -18,6 +21,20 @@ export function Navbar() {
     { name: "À propos", href: "/a-propos" },
     { name: "Contact", href: "/contact" },
   ];
+
+  const handleSignOut = async () => {
+    await signOut();
+    router.push('/');
+    router.refresh();
+  };
+
+  const displayName = profile?.full_name || user?.email?.split('@')[0] || '';
+  const initials = displayName
+    .split(' ')
+    .map((n: string) => n[0])
+    .join('')
+    .toUpperCase()
+    .slice(0, 2);
 
   return (
     <nav className="sticky top-0 z-50 bg-white dark:bg-slate-950 border-b border-border shadow-sm">
@@ -64,14 +81,40 @@ export function Navbar() {
             })}
           </div>
 
-          {/* Desktop Buttons */}
+          {/* Desktop Auth Buttons */}
           <div className="hidden md:flex items-center gap-4">
-            <Button variant="outline" asChild>
-              <Link href="/auth/signin">Connexion</Link>
-            </Button>
-            <Button asChild className="bg-primary hover:bg-primary/90">
-              <Link href="/auth/signup">S'inscrire</Link>
-            </Button>
+            {loading ? (
+              <div className="w-24 h-9 bg-secondary animate-pulse rounded-md" />
+            ) : user ? (
+              <>
+                <Link href="/profil" className="flex items-center gap-2 hover:opacity-80 transition">
+                  <div className="w-8 h-8 rounded-full bg-primary/15 flex items-center justify-center text-sm font-semibold text-primary">
+                    {initials || <User size={16} />}
+                  </div>
+                  <span className="text-sm font-medium text-foreground max-w-[120px] truncate">
+                    {displayName}
+                  </span>
+                </Link>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleSignOut}
+                  className="gap-1"
+                >
+                  <LogOut size={16} />
+                  <span className="hidden lg:inline">Déconnexion</span>
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button variant="outline" asChild>
+                  <Link href="/auth/signin">Connexion</Link>
+                </Button>
+                <Button asChild className="bg-primary hover:bg-primary/90">
+                  <Link href="/auth/signup">S&apos;inscrire</Link>
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -104,15 +147,46 @@ export function Navbar() {
                 );
               })}
               <div className="flex flex-col gap-2 mt-4">
-                <Button variant="outline" className="w-full" asChild>
-                  <Link href="/auth/signin">Connexion</Link>
-                </Button>
-                <Button
-                  className="w-full bg-primary hover:bg-primary/90"
-                  asChild
-                >
-                  <Link href="/auth/signup">S'inscrire</Link>
-                </Button>
+                {loading ? (
+                  <div className="h-10 bg-secondary animate-pulse rounded-md" />
+                ) : user ? (
+                  <>
+                    <Link
+                      href="/profil"
+                      className="flex items-center gap-3 py-2"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <div className="w-8 h-8 rounded-full bg-primary/15 flex items-center justify-center text-sm font-semibold text-primary">
+                        {initials || <User size={16} />}
+                      </div>
+                      <span className="font-medium text-foreground">{displayName}</span>
+                    </Link>
+                    <Button
+                      variant="outline"
+                      className="w-full gap-2"
+                      onClick={() => {
+                        handleSignOut();
+                        setIsOpen(false);
+                      }}
+                    >
+                      <LogOut size={16} />
+                      Déconnexion
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button variant="outline" className="w-full" asChild>
+                      <Link href="/auth/signin" onClick={() => setIsOpen(false)}>
+                        Connexion
+                      </Link>
+                    </Button>
+                    <Button className="w-full bg-primary hover:bg-primary/90" asChild>
+                      <Link href="/auth/signup" onClick={() => setIsOpen(false)}>
+                        S&apos;inscrire
+                      </Link>
+                    </Button>
+                  </>
+                )}
               </div>
             </div>
           </div>
