@@ -17,8 +17,9 @@ import { LogOut, MessageSquare, Home, Loader2, CheckCircle, User } from 'lucide-
 import { useAuth } from '@/lib/auth-context';
 import { supabase, toFrontendProperty } from '@/lib/supabase';
 import type { DbProperty, Message } from '@/lib/supabase';
+import { Suspense } from 'react';
 
-export default function ProfilPage() {
+function ProfilContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { user, profile, loading: authLoading, signOut, refreshProfile } = useAuth();
@@ -187,7 +188,7 @@ export default function ProfilPage() {
         {justPublished && (
           <motion.div variants={itemVariants} className="mb-8">
             <div className="p-4 bg-primary/10 border border-primary/20 rounded-lg flex items-center gap-3">
-              <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-primary shrink-0" />
               <p className="text-sm text-foreground">
                 <strong>Annonce soumise avec succès !</strong> Elle sera visible après validation par notre équipe.
               </p>
@@ -197,7 +198,7 @@ export default function ProfilPage() {
 
         {/* User Header */}
         <motion.div variants={itemVariants}>
-          <Card className="p-8 bg-gradient-to-r from-primary/10 to-accent/10 border-border mb-12">
+          <Card className="p-8 bg-linear-to-r from-primary/10 to-accent/10 border-border mb-12">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
               <div className="flex items-center gap-6">
                 <div className="w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center text-2xl font-bold text-primary">
@@ -436,5 +437,17 @@ export default function ProfilPage() {
 
       <Footer />
     </main>
+  );
+}
+
+export default function ProfilPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-background dark:bg-slate-950">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    }>
+      <ProfilContent />
+    </Suspense>
   );
 }

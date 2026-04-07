@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { Suspense, useState, useEffect } from "react";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { FilterSidebar } from "@/components/filter-sidebar";
@@ -12,7 +12,7 @@ import type { DbProperty } from "@/lib/supabase";
 import { motion } from "framer-motion";
 import { Loader2 } from "lucide-react";
 
-export default function AnnoncesPage() {
+function AnnoncesContent() {
   const searchParams = useSearchParams();
   const [properties, setProperties] = useState<ReturnType<typeof toFrontendProperty>[]>([]);
   const [loading, setLoading] = useState(true);
@@ -164,5 +164,17 @@ export default function AnnoncesPage() {
 
       <Footer />
     </main>
+  );
+}
+
+export default function AnnoncesPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-black">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      </div>
+    }>
+      <AnnoncesContent />
+    </Suspense>
   );
 }
