@@ -1,0 +1,24 @@
+@startuml
+actor "Propriétaire/Agent" as U
+participant "Frontend (Next.js)" as F
+participant "API / Backend" as B
+database "Base de Données" as DB
+
+U -> F: Clique sur le bouton "Publier"
+F -> B: Vérifie si l'utilisateur est connecté (Session)
+
+alt Non Authentifié
+    B --> F: Non autorisé (401)
+    F --> U: Redirige vers /auth/signin
+else Authentifié
+    B --> F: Session Valide
+    F --> U: Affiche le formulaire de publication
+    U -> F: Remplit le formulaire et ajoute des photos
+    F -> B: POST /api/properties (Données saisies)
+    note right of B: Upload des images\n(ex: vers S3/Supabase)
+    B -> DB: INSERT nouvelle propriété\n(Statut: EN_ATTENTE)
+    DB --> B: Retourne l'ID de la propriété
+    B --> F: 201 Created (Succès)
+    F --> U: Affiche "Votre annonce est\nen cours de validation"
+end
+@enduml

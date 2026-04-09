@@ -1,0 +1,36 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Visiteur" as Visiteur
+actor "Utilisateur Inscrit" as Utilisateur
+actor "Administrateur" as Admin
+
+Utilisateur -|> Visiteur : est un
+Admin -|> Utilisateur : est un
+
+rectangle "Plateforme Immo Home237 - MVP" {
+  usecase "Rechercher des biens" as UC1
+  usecase "Filtrer annonces (ville/budget)" as UC2
+  usecase "Consulter les détails d'un bien" as UC3
+  usecase "Contacter l'annonceur" as UC4
+  usecase "Créer un compte / Se connecter" as UC5
+  
+  usecase "Publier une annonce immo" as UC6
+  usecase "Gérer ses propres annonces" as UC7
+  
+  usecase "Vérifier et Valider les annonces" as UC8
+}
+
+Visiteur --> UC1
+Visiteur --> UC2
+Visiteur --> UC3
+Visiteur --> UC4
+Visiteur --> UC5
+
+Utilisateur --> UC6
+Utilisateur --> UC7
+
+Admin --> UC8
+
+@enduml

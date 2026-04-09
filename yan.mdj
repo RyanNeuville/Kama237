@@ -1,0 +1,150 @@
+{
+	"_type": "Project",
+	"_id": "AAAAA",
+	"name": "SuiviColisProject",
+	"ownedElements": [
+		{
+			"_type": "UMLModel",
+			"_id": "model1",
+			"name": "Model",
+			"ownedElements": [
+				{
+					"_type": "UMLSequenceDiagram",
+					"_id": "seq1",
+					"name": "Suivi Colis Temps Réel",
+					"ownedElements": [
+						{
+							"_type": "UMLLifeline",
+							"_id": "user",
+							"name": "Client"
+						},
+						{
+							"_type": "UMLLifeline",
+							"_id": "app",
+							"name": "Application Mobile"
+						},
+						{
+							"_type": "UMLLifeline",
+							"_id": "api",
+							"name": "API Backend"
+						},
+						{
+							"_type": "UMLLifeline",
+							"_id": "db",
+							"name": "Base de Données"
+						},
+						{
+							"_type": "UMLLifeline",
+							"_id": "gps",
+							"name": "Service GPS"
+						},
+						{
+							"_type": "UMLLifeline",
+							"_id": "livreur",
+							"name": "Livreur"
+						},
+						{
+							"_type": "UMLMessage",
+							"_id": "msg1",
+							"name": "Saisir numéro colis",
+							"source": {
+								"$ref": "user"
+							},
+							"target": {
+								"$ref": "app"
+							}
+						},
+						{
+							"_type": "UMLMessage",
+							"_id": "msg2",
+							"name": "Requête suivi colis",
+							"source": {
+								"$ref": "app"
+							},
+							"target": {
+								"$ref": "api"
+							}
+						},
+						{
+							"_type": "UMLMessage",
+							"_id": "msg3",
+							"name": "Vérifier colis",
+							"source": {
+								"$ref": "api"
+							},
+							"target": {
+								"$ref": "db"
+							}
+						},
+						{
+							"_type": "UMLMessage",
+							"_id": "msg4",
+							"name": "Retour infos colis",
+							"source": {
+								"$ref": "db"
+							},
+							"target": {
+								"$ref": "api"
+							}
+						},
+						{
+							"_type": "UMLMessage",
+							"_id": "msg5",
+							"name": "Demande position livreur",
+							"source": {
+								"$ref": "api"
+							},
+							"target": {
+								"$ref": "gps"
+							}
+						},
+						{
+							"_type": "UMLMessage",
+							"_id": "msg6",
+							"name": "Position GPS",
+							"source": {
+								"$ref": "gps"
+							},
+							"target": {
+								"$ref": "api"
+							}
+						},
+						{
+							"_type": "UMLMessage",
+							"_id": "msg7",
+							"name": "Envoyer position temps réel",
+							"source": {
+								"$ref": "livreur"
+							},
+							"target": {
+								"$ref": "gps"
+							}
+						},
+						{
+							"_type": "UMLMessage",
+							"_id": "msg8",
+							"name": "Réponse complète",
+							"source": {
+								"$ref": "api"
+							},
+							"target": {
+								"$ref": "app"
+							}
+						},
+						{
+							"_type": "UMLMessage",
+							"_id": "msg9",
+							"name": "Afficher carte + statut",
+							"source": {
+								"$ref": "app"
+							},
+							"target": {
+								"$ref": "user"
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}

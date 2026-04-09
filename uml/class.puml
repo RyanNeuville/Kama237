@@ -1,0 +1,77 @@
+@startuml
+
+enum Role {
+    USER
+    ADMIN
+}
+
+enum TypeBien {
+    APPARTEMENT
+    VILLA
+    MAISON
+    STUDIO
+    TERRAIN
+    COMMERCE
+}
+
+enum Transaction {
+    A_LOUER
+    A_VENDRE
+}
+
+enum Status {
+    EN_ATTENTE
+    PUBLIE
+    ARCHIVE
+}
+
+class User {
+    +String id
+    +String nomComplet
+    +String email
+    +String motDePasse
+    +String telephone
+    +Date dateInscription
+    +login()
+    +register()
+}
+
+class Property {
+    +String id
+    +String titre
+    +String description
+    +Float prix
+    +String ville
+    +String quartier
+    +Integer chambres
+    +Integer sallesDeBain
+    +Integer surfaceMetreCarre
+    +List<String> images
+    +Boolean isFeatured
+    +Date datePublication
+    +String userId
+    +create()
+    +update()
+    +delete()
+}
+
+class Message {
+    +String id
+    +String nomExpediteur
+    +String emailExpediteur
+    +String telephoneExpediteur
+    +String contenu
+    +Date dateEnvoi
+    +String propertyId
+}
+
+User -down-> Role : a pour role >
+Property -down-> TypeBien : est de type >
+Property -down-> Transaction : est pour >
+Property -down-> Status : a pour statut >
+
+User "1" -right- "0..*" Property : Publie >
+User "0..1" -- "0..*" Message : Envoie >
+Property "1" -left- "0..*" Message : Concerne >
+
+@enduml
