@@ -19,6 +19,7 @@ import {
   Share2, Heart, MessageCircle, Phone, Loader2, CheckCircle, User,
 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { toast } from 'sonner';
 
 export default function PropertyDetailPage() {
   const { id } = useParams();
@@ -32,8 +33,6 @@ export default function PropertyDetailPage() {
   const [msgPhone, setMsgPhone] = useState('');
   const [msgContent, setMsgContent] = useState('');
   const [sendingMsg, setSendingMsg] = useState(false);
-  const [msgSent, setMsgSent] = useState(false);
-  const [msgError, setMsgError] = useState('');
 
   useEffect(() => {
     async function fetchProperty() {
@@ -62,7 +61,6 @@ export default function PropertyDetailPage() {
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     setSendingMsg(true);
-    setMsgError('');
 
     const { error } = await supabase.from('messages').insert({
       property_id: id,
@@ -73,10 +71,10 @@ export default function PropertyDetailPage() {
     });
 
     if (error) {
-      setMsgError("Erreur lors de l'envoi. Veuillez réessayer.");
+      toast.error("Erreur lors de l'envoi du message. Veuillez réessayer.");
       console.error(error);
     } else {
-      setMsgSent(true);
+      toast.success("Votre message a été envoyé avec succès !");
       setMsgName('');
       setMsgEmail('');
       setMsgPhone('');
@@ -185,7 +183,11 @@ export default function PropertyDetailPage() {
                       WhatsApp
                     </Button>
                   </a>
-                  <Button variant="outline" className="w-full">
+                  <Button 
+                    variant="outline" 
+                    className="w-full"
+                    onClick={() => toast.info("Cette fonctionnalité (Favoris) sera bientôt disponible !")}
+                  >
                     <Heart size={18} className="mr-2" />
                     Favoris
                   </Button>
@@ -243,22 +245,7 @@ export default function PropertyDetailPage() {
             {/* Contact Form */}
             <Card className="p-6 bg-white dark:bg-slate-800 border-border">
               <h2 className="text-2xl font-bold text-foreground mb-6">Contacter le propriétaire</h2>
-              {msgSent ? (
-                <div className="text-center py-8">
-                  <CheckCircle className="h-12 w-12 text-primary mx-auto mb-4" />
-                  <p className="font-semibold text-foreground">Message envoyé avec succès !</p>
-                  <p className="text-muted-foreground text-sm mt-2">Le propriétaire vous répondra dès que possible.</p>
-                  <Button onClick={() => setMsgSent(false)} variant="outline" className="mt-4">
-                    Envoyer un autre message
-                  </Button>
-                </div>
-              ) : (
                 <form onSubmit={handleSendMessage} className="space-y-4">
-                  {msgError && (
-                    <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-lg text-sm text-destructive">
-                      {msgError}
-                    </div>
-                  )}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <Label htmlFor="msg-name" className="font-semibold mb-2 block">Nom *</Label>
@@ -285,7 +272,6 @@ export default function PropertyDetailPage() {
                     )}
                   </Button>
                 </form>
-              )}
             </Card>
           </div>
 
