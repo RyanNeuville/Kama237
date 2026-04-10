@@ -7,7 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import { Mail, Phone, MapPin, Clock, Send, CheckCircle } from "lucide-react";
+import { supabase } from "@/lib/supabase";
+import { Loader2, Mail, Phone, MapPin, Clock, Send, CheckCircle } from "lucide-react";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -39,6 +40,8 @@ export default function ContactPage() {
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -48,14 +51,29 @@ export default function ContactPage() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate form submission
-    setSubmitted(true);
-    setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+    setLoading(true);
+    setErrorMsg("");
 
-    // Reset after 5 seconds
-    setTimeout(() => setSubmitted(false), 5000);
+    const { error } = await supabase.from('site_contacts').insert({
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone || null,
+      subject: formData.subject,
+      message: formData.message
+    });
+
+    if (error) {
+      setErrorMsg("Une erreur est survenue lors de l'envoi. Veuillez réessayer.");
+      console.error(error);
+    } else {
+      setSubmitted(true);
+      setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+      setTimeout(() => setSubmitted(false), 5000);
+    }
+    
+    setLoading(false);
   };
 
   return (
@@ -210,6 +228,11 @@ export default function ContactPage() {
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
+                  {errorMsg && (
+                    <div className="p-3 bg-red-100 border border-red-200 text-red-600 rounded-lg text-sm">
+                      {errorMsg}
+                    </div>
+                  )}
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">
                       Nom complet
@@ -292,10 +315,14 @@ export default function ContactPage() {
 
                   <Button
                     type="submit"
+                    disabled={loading}
                     className="w-full bg-primary hover:bg-primary/90 text-white flex items-center justify-center gap-2"
                   >
-                    <Send className="w-4 h-4" />
-                    Envoyer le message
+                    {loading ? (
+                      <><Loader2 className="w-4 h-4 animate-spin" /> Envoi en cours...</>
+                    ) : (
+                      <><Send className="w-4 h-4" /> Envoyer le message</>
+                    )}
                   </Button>
                 </form>
               )}

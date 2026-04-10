@@ -71,6 +71,18 @@ CREATE TABLE IF NOT EXISTS public.messages (
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+-- Site Contacts (General Contact Form)
+CREATE TABLE IF NOT EXISTS public.site_contacts (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    name TEXT NOT NULL,
+    email TEXT NOT NULL,
+    phone TEXT,
+    subject TEXT NOT NULL,
+    message TEXT NOT NULL,
+    is_read BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
 -- 4. ROW LEVEL SECURITY (RLS)
 
 -- Enable RLS
@@ -123,6 +135,20 @@ CREATE POLICY "Property owners can read messages for their properties" ON public
     );
 
 CREATE POLICY "Admins can read all messages" ON public.messages
+    FOR SELECT USING (
+        EXISTS (
+            SELECT 1 FROM public.profiles 
+            WHERE id = auth.uid() AND role = 'ADMIN'
+        )
+    );
+
+-- Site Contacts Policies
+ALTER TABLE public.site_contacts ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Anyone can submit a contact form" ON public.site_contacts
+    FOR INSERT WITH CHECK (true);
+
+CREATE POLICY "Only admins can view contact forms" ON public.site_contacts
     FOR SELECT USING (
         EXISTS (
             SELECT 1 FROM public.profiles 
