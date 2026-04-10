@@ -14,6 +14,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { supabase } from '@/lib/supabase';
 import { Loader2, CheckCircle } from 'lucide-react';
+import { toast } from 'sonner';
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -23,20 +24,18 @@ export default function SignUpPage() {
   const [password, setPassword] = useState('');
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
 
     if (!termsAccepted) {
-      setError('Vous devez accepter les conditions générales.');
+      toast.error('Vous devez accepter les conditions générales.');
       return;
     }
 
     if (password.length < 6) {
-      setError('Le mot de passe doit contenir au moins 6 caractères.');
+      toast.error('Le mot de passe doit contenir au moins 6 caractères.');
       return;
     }
 
@@ -56,9 +55,9 @@ export default function SignUpPage() {
 
     if (authError) {
       if (authError.message.includes('already registered')) {
-        setError('Un compte existe déjà avec cette adresse email.');
+        toast.error('Un compte existe déjà avec cette adresse email.');
       } else {
-        setError(authError.message);
+        toast.error(authError.message);
       }
       setLoading(false);
       return;
@@ -129,12 +128,6 @@ export default function SignUpPage() {
                 Créez votre compte Home237
               </p>
             </div>
-
-            {error && (
-              <div className="mb-6 p-3 bg-destructive/10 border border-destructive/20 rounded-lg text-sm text-destructive">
-                {error}
-              </div>
-            )}
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>

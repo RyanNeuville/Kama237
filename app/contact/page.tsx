@@ -7,7 +7,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import { Mail, Phone, MapPin, Clock, Send, CheckCircle } from "lucide-react";
+import { supabase } from "@/lib/supabase";
+import { Loader2, Mail, Phone, MapPin, Clock, Send, CheckCircle } from "lucide-react";
+import { toast } from "sonner";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -38,7 +40,7 @@ export default function ContactPage() {
     message: "",
   });
 
-  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -48,14 +50,27 @@ export default function ContactPage() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate form submission
-    setSubmitted(true);
-    setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+    setLoading(true);
 
-    // Reset after 5 seconds
-    setTimeout(() => setSubmitted(false), 5000);
+    const { error } = await supabase.from('site_contacts').insert({
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone || null,
+      subject: formData.subject,
+      message: formData.message
+    });
+
+    if (error) {
+      toast.error("Une erreur est survenue lors de l'envoi. Veuillez réessayer.");
+      console.error(error);
+    } else {
+      toast.success("Votre message a été envoyé avec succès ! Nous vous répondrons sous 24h.");
+      setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+    }
+    
+    setLoading(false);
   };
 
   return (
@@ -63,7 +78,7 @@ export default function ContactPage() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative py-24 bg-gradient-to-br from-primary/10 to-accent/10 overflow-hidden">
+      <section className="relative py-24 bg-linear-to-br from-primary/10 to-accent/10 overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           <div
             className="absolute inset-0"
@@ -178,7 +193,7 @@ export default function ContactPage() {
       </section>
 
       {/* Main Contact Section */}
-      <section className="py-20 bg-gradient-to-br from-secondary/50 to-background">
+      <section className="py-20 bg-linear-to-br from-secondary/50 to-background">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12">
             {/* Contact Form */}
@@ -192,23 +207,6 @@ export default function ContactPage() {
                 Envoyez-nous un Message
               </h2>
 
-              {submitted ? (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.4 }}
-                  className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800 rounded-lg p-8 text-center"
-                >
-                  <CheckCircle className="w-12 h-12 text-green-600 dark:text-green-400 mx-auto mb-4" />
-                  <h3 className="text-xl font-semibold text-green-900 dark:text-green-100 mb-2">
-                    Merci !
-                  </h3>
-                  <p className="text-green-700 dark:text-green-200">
-                    Votre message a été reçu. Nous vous répondrons dans les 24
-                    heures.
-                  </p>
-                </motion.div>
-              ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">
@@ -292,13 +290,16 @@ export default function ContactPage() {
 
                   <Button
                     type="submit"
+                    disabled={loading}
                     className="w-full bg-primary hover:bg-primary/90 text-white flex items-center justify-center gap-2"
                   >
-                    <Send className="w-4 h-4" />
-                    Envoyer le message
+                    {loading ? (
+                      <><Loader2 className="w-4 h-4 animate-spin" /> Envoi en cours...</>
+                    ) : (
+                      <><Send className="w-4 h-4" /> Envoyer le message</>
+                    )}
                   </Button>
                 </form>
-              )}
             </motion.div>
 
             {/* FAQ Section */}
@@ -368,7 +369,7 @@ export default function ContactPage() {
       </section>
 
       {/* Newsletter Section */}
-      <section className="py-20 bg-gradient-to-br from-primary to-primary/80">
+      <section className="py-20 bg-linear-to-br from-primary to-primary/80">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

@@ -59,23 +59,26 @@ export function Navbar() {
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => {
-              const isActive = pathname === link.href;
-              return (
+              const isActive = link.href === "/" 
+                ? pathname === "/" 
+                : pathname.startsWith(link.href);
+              
+              return isActive ? (
+                <Button
+                  key={link.name}
+                  variant="default"
+                  asChild
+                  className="bg-primary hover:bg-black/90 text-white cursor-pointer"
+                >
+                  <Link href={link.href}>{link.name}</Link>
+                </Button>
+              ) : (
                 <Link
                   key={link.name}
                   href={link.href}
-                  className="text-foreground hover:text-primary transition"
+                  className="text-foreground hover:text-primary transition font-medium"
                 >
-                  {isActive ? (
-                    <Button
-                      variant="default"
-                      className="bg-primary hover:bg-black/90 text-white cursor-pointer"
-                    >
-                      {link.name}
-                    </Button>
-                  ) : (
-                    link.name
-                  )}
+                  {link.name}
                 </Link>
               );
             })}
@@ -132,12 +135,14 @@ export function Navbar() {
           <div className="md:hidden pb-4 border-t border-border">
             <div className="flex flex-col gap-4 pt-4 px-4">
               {navLinks.map((link) => {
-                const isActive = pathname === link.href;
+                const isActive = link.href === "/" 
+                  ? pathname === "/" 
+                  : pathname.startsWith(link.href);
                 return (
-                  <Link
+                   <Link
                     key={link.name}
                     href={link.href}
-                    className={`text-foreground hover:text-primary transition ${
+                    className={`text-foreground hover:text-primary transition font-medium ${
                       isActive ? "text-primary font-bold" : ""
                     }`}
                     onClick={() => setIsOpen(false)}

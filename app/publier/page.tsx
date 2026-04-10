@@ -15,6 +15,7 @@ import { motion } from 'framer-motion';
 import { Upload, Check, X, Loader2, ImageIcon } from 'lucide-react';
 import { useAuth } from '@/lib/auth-context';
 import { supabase, uploadPropertyImage } from '@/lib/supabase';
+import { toast } from 'sonner';
 import Image from 'next/image';
 
 const typeMapping: Record<string, string> = {
@@ -38,7 +39,6 @@ export default function PublierPage() {
 
   const [step, setStep] = useState(1);
   const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState('');
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
 
@@ -89,10 +89,9 @@ export default function PublierPage() {
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
     if (selectedFiles.length + files.length > 5) {
-      setError('Maximum 5 photos autorisées.');
+      toast.error('Maximum 5 photos autorisées.');
       return;
     }
-    setError('');
     const newFiles = [...selectedFiles, ...files].slice(0, 5);
     setSelectedFiles(newFiles);
     setPreviewUrls(newFiles.map((f) => URL.createObjectURL(f)));
@@ -114,12 +113,11 @@ export default function PublierPage() {
     if (!user) return;
 
     if (selectedFiles.length === 0) {
-      setError('Ajoutez au moins une photo.');
+      toast.error('Ajoutez au moins une photo.');
       return;
     }
 
     setSubmitting(true);
-    setError('');
 
     try {
       // 1. Upload images
@@ -153,10 +151,11 @@ export default function PublierPage() {
 
       if (insertError) throw insertError;
 
+      toast.success('Votre annonce a été publiée avec succès !');
       router.push('/profil?published=true');
     } catch (err) {
       console.error(err);
-      setError('Une erreur est survenue lors de la publication. Veuillez réessayer.');
+      toast.error('Une erreur est survenue lors de la publication. Veuillez réessayer.');
     } finally {
       setSubmitting(false);
     }
@@ -240,12 +239,6 @@ export default function PublierPage() {
             <span>Photos & Vérification</span>
           </div>
         </motion.div>
-
-        {error && (
-          <div className="mb-6 p-3 bg-destructive/10 border border-destructive/20 rounded-lg text-sm text-destructive">
-            {error}
-          </div>
-        )}
 
         {/* Form */}
         <form onSubmit={handleSubmit}>

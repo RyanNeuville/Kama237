@@ -1,4 +1,4 @@
--- Home237 Supabase Database Setup
+-- Home237 Supabase Database & Storage Setup
 -- Based on UML Class, Use Case, and Sequence Diagrams
 
 -- 1. EXTENSIONS
@@ -66,7 +66,19 @@ CREATE TABLE IF NOT EXISTS public.messages (
     sender_name TEXT NOT NULL,
     sender_email TEXT NOT NULL,
     sender_phone TEXT,
-    content TEXT NOT NULL, -- UML typo fixed from Date to Text
+    content TEXT NOT NULL,
+    is_read BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Site Contacts (General Contact Form)
+CREATE TABLE IF NOT EXISTS public.site_contacts (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    name TEXT NOT NULL,
+    email TEXT NOT NULL,
+    phone TEXT,
+    subject TEXT NOT NULL,
+    message TEXT NOT NULL,
     is_read BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
@@ -130,7 +142,33 @@ CREATE POLICY "Admins can read all messages" ON public.messages
         )
     );
 
--- 5. FUNCTIONS & TRIGGERS
+-- Site Contacts Policies
+ALTER TABLE public.site_contacts ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Anyone can submit a contact form" ON public.site_contacts
+    FOR INSERT WITH CHECK (true);
+
+CREATE POLICY "Only admins can view contact forms" ON public.site_contacts
+    FOR SELECT USING (
+        EXISTS (
+            SELECT 1 FROM public.profiles 
+            WHERE id = auth.uid() AND role = 'ADMIN'
+        )
+    );
+
+-- 5. STORAGE BUCKET & POLICIES (Missing from before!)
+INSERT INTO storage.buckets (id, name, public) VALUES ('property-images', 'property-images', true) ON CONFLICT (id) DO NOTHING;
+
+CREATE POLICY "Public Access" ON storage.objects
+    FOR SELECT USING (bucket_id = 'property-images');
+
+CREATE POLICY "Authenticated users can upload images" ON storage.objects
+    FOR INSERT WITH CHECK (bucket_id = 'property-images' AND auth.role() = 'authenticated');
+
+CREATE POLICY "Users can delete their own images" ON storage.objects
+    FOR DELETE USING (bucket_id = 'property-images' AND auth.uid() = owner);
+
+-- 6. FUNCTIONS & TRIGGERS
 
 -- Function to handle automated profile creation on signup
 CREATE OR REPLACE FUNCTION public.handle_new_user()
@@ -143,7 +181,8 @@ END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
 -- Trigger to run the function
-CREATE OR REPLACE TRIGGER on_auth_user_created
+DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
+CREATE TRIGGER on_auth_user_created
     AFTER INSERT ON auth.users
     FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
 
@@ -157,5 +196,8 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Apply updated_at triggers
+DROP TRIGGER IF EXISTS update_profiles_updated_at ON public.profiles;
 CREATE TRIGGER update_profiles_updated_at BEFORE UPDATE ON public.profiles FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+DROP TRIGGER IF EXISTS update_properties_updated_at ON public.properties;
 CREATE TRIGGER update_properties_updated_at BEFORE UPDATE ON public.properties FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
