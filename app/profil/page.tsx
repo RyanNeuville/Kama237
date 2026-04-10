@@ -33,6 +33,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { motion } from 'framer-motion';
+import { useAuth } from '@/lib/auth-context';
 import { supabase, toFrontendProperty } from '@/lib/supabase';
 import type { DbProperty, Message } from '@/lib/supabase';
 import { Suspense } from 'react';
@@ -48,12 +49,21 @@ function ProfilContent() {
 
   // Settings form
   const [settingsName, setSettingsName] = useState('');
+  const [settingsPhone, setSettingsPhone] = useState('');
   const [savingSettings, setSavingSettings] = useState(false);
   const [propertyToDelete, setPropertyToDelete] = useState<string | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
   const [selectedMessage, setSelectedMessage] = useState<(Message & { properties?: { id: string; title: string } }) | null>(null);
 
   const justPublished = searchParams.get('published') === 'true';
+
+  // Initialize settings
+  useEffect(() => {
+    if (profile) {
+      setSettingsName(profile.full_name || '');
+      setSettingsPhone(profile.phone || '');
+    }
+  }, [profile]);
 
   // Redirect if not authenticated
   useEffect(() => {
@@ -114,13 +124,20 @@ function ProfilContent() {
     e.preventDefault();
     if (!user) return;
     setSavingSettings(true);
-    setSettingsSaved(false);
+
+    const { error } = await supabase
+      .from('profiles')
+      .update({
+        full_name: settingsName,
+        phone: settingsPhone,
+      })
+      .eq('id', user.id);
 
     if (!error) {
       toast.success("Paramètres mis à jour avec succès !");
       await refreshProfile();
     } else {
-      toast.error("Erreur lors de la mise à jour des paramètres.");
+      toast.error("Erreur lors de la mise à jour des paramètres : " + error.message);
     }
     setSavingSettings(false);
   };
@@ -415,8 +432,9 @@ function ProfilContent() {
                               Lire
                             </Button>
                           </div>
-                        </Card>
-                      ))}
+                        </div>
+                      </Card>
+                    ))}
                     </div>
                   ) : (
                     <div className="text-center py-12">
