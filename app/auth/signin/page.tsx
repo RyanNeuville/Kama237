@@ -13,17 +13,16 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { supabase } from '@/lib/supabase';
 import { Loader2 } from 'lucide-react';
+import { toast } from 'sonner';
 
 export default function SignInPage() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
     setLoading(true);
 
     const { error: authError } = await supabase.auth.signInWithPassword({
@@ -33,16 +32,17 @@ export default function SignInPage() {
 
     if (authError) {
       if (authError.message.includes('Invalid login credentials')) {
-        setError('Email ou mot de passe incorrect.');
+        toast.error('Email ou mot de passe incorrect.');
       } else if (authError.message.includes('Email not confirmed')) {
-        setError('Veuillez confirmer votre adresse email avant de vous connecter.');
+        toast.error('Veuillez confirmer votre adresse email avant de vous connecter.');
       } else {
-        setError(authError.message);
+        toast.error(authError.message);
       }
       setLoading(false);
       return;
     }
 
+    toast.success('Connexion réussie !');
     router.push('/profil');
     router.refresh();
   };
@@ -73,12 +73,6 @@ export default function SignInPage() {
                 Connectez-vous à votre compte Home237
               </p>
             </div>
-
-            {error && (
-              <div className="mb-6 p-3 bg-destructive/10 border border-destructive/20 rounded-lg text-sm text-destructive">
-                {error}
-              </div>
-            )}
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>

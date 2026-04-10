@@ -12,9 +12,19 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { PropertyCard } from '@/components/property-card';
 import { Badge } from '@/components/ui/badge';
-import { motion } from 'framer-motion';
-import { LogOut, MessageSquare, Home, Loader2, CheckCircle, User } from 'lucide-react';
-import { useAuth } from '@/lib/auth-context';
+import { LogOut, MessageSquare, Home, Loader2, CheckCircle, User, Trash2 } from 'lucide-react';
+import { toast } from 'sonner';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { supabase, toFrontendProperty } from '@/lib/supabase';
 import type { DbProperty, Message } from '@/lib/supabase';
 import { Suspense } from 'react';
@@ -30,9 +40,9 @@ function ProfilContent() {
 
   // Settings form
   const [settingsName, setSettingsName] = useState('');
-  const [settingsPhone, setSettingsPhone] = useState('');
   const [savingSettings, setSavingSettings] = useState(false);
-  const [settingsSaved, setSettingsSaved] = useState(false);
+  const [propertyToDelete, setPropertyToDelete] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const justPublished = searchParams.get('published') === 'true';
 
@@ -97,24 +107,17 @@ function ProfilContent() {
     setSavingSettings(true);
     setSettingsSaved(false);
 
-    const { error } = await supabase
-      .from('profiles')
-      .update({
-        full_name: settingsName,
-        phone: settingsPhone,
-      })
-      .eq('id', user.id);
-
     if (!error) {
-      setSettingsSaved(true);
+      toast.success("Paramètres mis à jour avec succès !");
       await refreshProfile();
-      setTimeout(() => setSettingsSaved(false), 3000);
+    } else {
+      toast.error("Erreur lors de la mise à jour des paramètres.");
     }
     setSavingSettings(false);
   };
 
   const handleDeleteProperty = async (propertyId: string) => {
-    if (!confirm('Êtes-vous sûr de vouloir supprimer cette annonce ? Cette action est irréversible.')) return;
+    setIsDeleting(true);
 
     const { error } = await supabase
       .from('properties')
@@ -122,8 +125,14 @@ function ProfilContent() {
       .eq('id', propertyId);
 
     if (!error) {
+      toast.success("Annonce supprimée avec succès.");
       setMyProperties((prev) => prev.filter((p) => p.id !== propertyId));
+    } else {
+      toast.error("Erreur lors de la suppression de l'annonce.");
     }
+    
+    setIsDeleting(false);
+    setPropertyToDelete(null);
   };
 
   const formatTimeAgo = (dateStr: string) => {
@@ -297,16 +306,39 @@ function ProfilContent() {
                 ) : myProperties.length > 0 ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {myProperties.map((property) => (
-                      <div key={property.id} className="relative">
+                      <div key={property.id} className="relative group">
                         <PropertyCard property={property} />
-                        <div className="absolute top-4 right-4 flex gap-2">
-                          <Button
-                            size="sm"
-                            variant="destructive"
-                            onClick={() => handleDeleteProperty(property.id)}
-                          >
-                            Supprimer
-                          </Button>
+                        <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                              <Button
+                                size="sm"
+                                variant="destructive"
+                                className="shadow-lg"
+                              >
+                                <Trash2 size={16} className="mr-2" />
+                                Supprimer
+                              </Button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                              <AlertDialogHeader>
+                                <AlertDialogTitle>Confirmer la suppression</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                  Êtes-vous sûr de vouloir supprimer &quot;{property.title}&quot; ? 
+                                  Cette action est irréversible et retirera l&apos;annonce de la plateforme.
+                                </AlertDialogDescription>
+                              </AlertDialogHeader>
+                              <AlertDialogFooter>
+                                <AlertDialogCancel>Annuler</AlertDialogCancel>
+                                <AlertDialogAction 
+                                  onClick={() => handleDeleteProperty(property.id)}
+                                  className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                                >
+                                  Supprimer définitivement
+                                </AlertDialogAction>
+                              </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
                         </div>
                       </div>
                     ))}
@@ -421,8 +453,6 @@ function ProfilContent() {
                     >
                       {savingSettings ? (
                         <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Enregistrement...</>
-                      ) : settingsSaved ? (
-                        <><CheckCircle className="mr-2 h-4 w-4" />Enregistré !</>
                       ) : (
                         'Enregistrer les modifications'
                       )}

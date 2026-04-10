@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { Users, Target, Award, Zap, Home, TrendingUp } from "lucide-react";
+import { supabase } from "@/lib/supabase";
+import { useState, useEffect } from "react";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -28,12 +30,31 @@ const itemVariants = {
 };
 
 export default function AboutPage() {
+  const [stats, setStats] = useState({
+    properties: 0,
+    users: 0,
+  });
+
+  useEffect(() => {
+    async function fetchStats() {
+      const [{ count: propCount }, { count: userCount }] = await Promise.all([
+        supabase.from('properties').select('*', { count: 'exact', head: true }).eq('status', 'PUBLIE'),
+        supabase.from('profiles').select('*', { count: 'exact', head: true })
+      ]);
+      setStats({
+        properties: propCount || 0,
+        users: userCount || 0,
+      });
+    }
+    fetchStats();
+  }, []);
+
   return (
     <>
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative py-24 bg-gradient-to-br from-primary/10 to-accent/10 overflow-hidden">
+      <section className="relative py-24 bg-linear-to-br from-primary/10 to-accent/10 overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           <div
             className="absolute inset-0"
@@ -157,7 +178,7 @@ export default function AboutPage() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 bg-gradient-to-br from-primary to-primary/80 text-white">
+      <section className="py-20 bg-linear-to-br from-primary to-primary/80 text-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -177,9 +198,9 @@ export default function AboutPage() {
             className="grid md:grid-cols-4 gap-8"
           >
             {[
-              { number: "50+", label: "Annonces actives", icon: Home },
+              { number: `${stats.properties}+`, label: "Annonces actives", icon: Home },
               {
-                number: "100+",
+                number: `${stats.users}+`,
                 label: "Utilisateurs inscrits",
                 icon: Users,
               },
@@ -306,7 +327,7 @@ export default function AboutPage() {
               <motion.div
                 key={index}
                 variants={itemVariants}
-                className="bg-gradient-to-br from-primary/5 to-accent/5 border border-border rounded-lg p-8"
+                className="bg-linear-to-br from-primary/5 to-accent/5 border border-border rounded-lg p-8"
               >
                 <div className="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center mb-4">
                   <div className="w-6 h-6 rounded-full bg-primary" />
@@ -324,7 +345,7 @@ export default function AboutPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-primary to-primary/80">
+      <section className="py-20 bg-linear-to-br from-primary to-primary/80">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

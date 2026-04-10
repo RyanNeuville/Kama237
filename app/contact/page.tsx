@@ -9,6 +9,7 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { supabase } from "@/lib/supabase";
 import { Loader2, Mail, Phone, MapPin, Clock, Send, CheckCircle } from "lucide-react";
+import { toast } from "sonner";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -39,9 +40,7 @@ export default function ContactPage() {
     message: "",
   });
 
-  const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -54,7 +53,6 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setErrorMsg("");
 
     const { error } = await supabase.from('site_contacts').insert({
       name: formData.name,
@@ -65,12 +63,11 @@ export default function ContactPage() {
     });
 
     if (error) {
-      setErrorMsg("Une erreur est survenue lors de l'envoi. Veuillez réessayer.");
+      toast.error("Une erreur est survenue lors de l'envoi. Veuillez réessayer.");
       console.error(error);
     } else {
-      setSubmitted(true);
+      toast.success("Votre message a été envoyé avec succès ! Nous vous répondrons sous 24h.");
       setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
-      setTimeout(() => setSubmitted(false), 5000);
     }
     
     setLoading(false);
@@ -81,7 +78,7 @@ export default function ContactPage() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative py-24 bg-gradient-to-br from-primary/10 to-accent/10 overflow-hidden">
+      <section className="relative py-24 bg-linear-to-br from-primary/10 to-accent/10 overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           <div
             className="absolute inset-0"
@@ -196,7 +193,7 @@ export default function ContactPage() {
       </section>
 
       {/* Main Contact Section */}
-      <section className="py-20 bg-gradient-to-br from-secondary/50 to-background">
+      <section className="py-20 bg-linear-to-br from-secondary/50 to-background">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12">
             {/* Contact Form */}
@@ -210,29 +207,7 @@ export default function ContactPage() {
                 Envoyez-nous un Message
               </h2>
 
-              {submitted ? (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.4 }}
-                  className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800 rounded-lg p-8 text-center"
-                >
-                  <CheckCircle className="w-12 h-12 text-green-600 dark:text-green-400 mx-auto mb-4" />
-                  <h3 className="text-xl font-semibold text-green-900 dark:text-green-100 mb-2">
-                    Merci !
-                  </h3>
-                  <p className="text-green-700 dark:text-green-200">
-                    Votre message a été reçu. Nous vous répondrons dans les 24
-                    heures.
-                  </p>
-                </motion.div>
-              ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
-                  {errorMsg && (
-                    <div className="p-3 bg-red-100 border border-red-200 text-red-600 rounded-lg text-sm">
-                      {errorMsg}
-                    </div>
-                  )}
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">
                       Nom complet
@@ -325,7 +300,6 @@ export default function ContactPage() {
                     )}
                   </Button>
                 </form>
-              )}
             </motion.div>
 
             {/* FAQ Section */}
@@ -395,7 +369,7 @@ export default function ContactPage() {
       </section>
 
       {/* Newsletter Section */}
-      <section className="py-20 bg-gradient-to-br from-primary to-primary/80">
+      <section className="py-20 bg-linear-to-br from-primary to-primary/80">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

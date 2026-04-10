@@ -60,22 +60,22 @@ export function Navbar() {
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
-              return (
+              return isActive ? (
+                <Button
+                  key={link.name}
+                  variant="default"
+                  asChild
+                  className="bg-primary hover:bg-black/90 text-white cursor-pointer"
+                >
+                  <Link href={link.href}>{link.name}</Link>
+                </Button>
+              ) : (
                 <Link
                   key={link.name}
                   href={link.href}
                   className="text-foreground hover:text-primary transition"
                 >
-                  {isActive ? (
-                    <Button
-                      variant="default"
-                      className="bg-primary hover:bg-black/90 text-white cursor-pointer"
-                    >
-                      {link.name}
-                    </Button>
-                  ) : (
-                    link.name
-                  )}
+                  {link.name}
                 </Link>
               );
             })}
