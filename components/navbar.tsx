@@ -156,6 +156,16 @@ export function Navbar() {
                   <div className="h-10 bg-secondary animate-pulse rounded-md" />
                 ) : user ? (
                   <>
+                    {profile?.role === 'ADMIN' && (
+                      <Link
+                        href="/admin"
+                        className="flex items-center gap-3 py-2 text-primary font-bold"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        <ShieldCheck size={18} />
+                        Dashboard Admin
+                      </Link>
+                    )}
                     <Link
                       href="/profil"
                       className="flex items-center gap-3 py-2"
