@@ -53,6 +53,17 @@ export type Message = {
   properties?: Pick<DbProperty, 'id' | 'title'>
 }
 
+export type SiteContact = {
+  id: string
+  name: string
+  email: string
+  phone: string | null
+  subject: string
+  message: string
+  is_read: boolean
+  created_at: string
+}
+
 // ─── Helpers ─────────────────────────────────────────────────
 
 /** Map DB property type to frontend display string */
